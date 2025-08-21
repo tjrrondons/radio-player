@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Player Rádio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@900&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    color: white;
+  }
+
+  .top-gradient-bar {
+    height: 6px;
+    background: linear-gradient(to right, #00f0a0, #00e0d0, #00d0ff);
+  }
+
+  .player {
+    display: flex;
+    align-items: center;
+    background: #00002e;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 10px;
+    width: fit-content;
+    gap: 20px;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .live-play {
+    display: flex;
+    align-items: center;
+    height: 2px;
+  }
+
+  .live-indicator {
+    background: #ff7900;
+    color: #f2f2f2;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    padding: 0 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    border-radius: 110px 0 0 110px;
+  }
+
+  .play-button {
+    background: #0025ff;
+    border: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: -2px;
+  }
+
+  .play-icon {
+    width: 0;
+    height: 0;
+    border-left: 11px solid #f2f2f2;
+    border-top: 6.115px solid transparent;
+    border-bottom: 6.115px solid transparent;
+    margin-left: 2px;
+  }
+
+  .pause-icon {
+    width: 10px;
+    height: 12.23px;
+    position: relative;
+  }
+  .pause-icon::before, .pause-icon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 3px;
+    height: 12.23px;
+    background: #f2f2f2;
+  }
+  .pause-icon::before { left: 0; }
+  .pause-icon::after { right: 0; }
+
+  .volume-control {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .volume-icon {
+    width: 50px;
+    height: 30px;
+    cursor: pointer;
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 70px;
+    height: 2px;
+    background: linear-gradient(to right, #b9fb12 50%, #f2f2f2 50%);
+    cursor: pointer;
+    margin: 0;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 7px;
+    background: #b9fb12;
+    border-radius: 50%;
+    margin-top: 0px;
+    cursor: pointer;
+  }
+
+  .separator {
+    width: 1px;
+    height: 32px;
+    background: #f2f2f2;
+  }
+
+  .whatsapp-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 2px solid white;
+    border-radius: 130px;
+    padding: 3px 8px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+  }
+  .whatsapp-button:hover {
+    background-color: rgba(255,255,255,0.1);
+  }
+  .whatsapp-button svg {
+    width: 16px;
+    height: 16px;
+    fill: white;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-gradient-bar"></div>
+
+<div class="player">
+  <div class="left-section">
+    <div class="live-play">
+      <div class="live-indicator">AO VIVO</div>
+      <button class="play-button" id="playPauseBtn">
+        <div class="play-icon" id="playIcon"></div>
+      </button>
+    </div>
+
+    <div class="volume-control">
+      <svg class="volume-icon" id="volumeIcon" viewBox="0 0 24 24" fill="currentColor">
+        <!-- Ícone normal -->
+        <g id="volumeNormal">
+          <path d="M3.5 9.5v5c0 .28.22.5.5.5h3.29l3.85 3.85a.5.5 0 0 0 .86-.35V5.5a.5.5 0 0 0-.86-.35L7.29 9H4a.5.5 0 0 0-.5.5z"/>
+          <path d="M17.5 12c0-2.07-.84-3.94-2.2-5.3a.5.5 0 0 0-.71.71 6 6 0 0 1 0 8.48.5.5 0 1 0 .71.71c1.36-1.36 2.2-3.23 2.2-5.3z"/>
+          <path d="M20.5 12c0-2.76-1.12-5.26-2.93-7.07a.5.5 0 1 0-.71.71 9 9 0 0 1 0 12.72.5.5 0 1 0 .71.71c1.81-1.81 2.93-4.31 2.93-7.07z"/>
+        </g>
+        <!-- Ícone mute -->
+        <g id="volumeMute" style="display:none;">
+          <path d="M3.5 9.5v5c0 .28.22.5.5.5h3.29l3.85 3.85a.5.5 0 0 0 .86-.35V5.5a.5.5 0 0 0-.86-.35L7.29 9H4a.5.5 0 0 0-.5.5z" fill="#ccc"/>
+          <line x1="17" y1="8" x2="22" y2="16" stroke="red" stroke-width="2"/>
+          <line x1="22" y1="8" x2="17" y2="16" stroke="red" stroke-width="2"/>
+        </g>
+      </svg>
+      <input type="range" id="volumeRange" min="0" max="1" step="0.01" value="0.5" />
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <a href="https://wa.me/5565984756365" target="_blank" class="whatsapp-button">
+    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+      <path d="M256.064 0C114.838 0 0 114.833 0 256.06c0 45.175 11.782 89.367 34.104 128.24L0 512l133.574-34.72c37.896 20.71 80.699 31.64 122.49 31.64h.002c141.225 0 256.062-114.833 256.062-256.06C512.128 114.833 397.289 0 256.064 0zM256.064 472.09h-.002c-38.45 0-76.133-10.305-109.052-29.798l-7.806-4.64-79.315 20.605 21.158-77.4-5.078-8.036c-21.188-33.546-32.383-72.34-32.383-112.762 0-115.168 93.72-208.888 208.89-208.888 55.819 0 108.309 21.754 147.707 61.152 39.397 39.397 61.152 91.888 61.152 147.707-.001 115.17-93.722 208.9-208.901 208.9zm115.382-155.34c-6.31-3.154-37.31-18.41-43.1-20.528-5.79-2.12-10.02-3.153-14.25 3.154-4.232 6.31-16.35 20.53-20.05 24.762-3.702 4.232-7.4 4.77-13.71 1.616-6.31-3.155-26.62-9.8-50.68-31.26-18.73-16.71-31.36-37.31-35.05-43.62-3.7-6.31-.39-9.72 2.77-12.87 2.84-2.84 6.31-7.4 9.47-11.1 3.16-3.7 4.21-6.31 6.31-10.54 2.1-4.23 1.05-7.9-.52-11.05-1.616-3.154-14.25-34.27-19.49-46.9-5.14-12.35-10.34-10.65-14.25-10.85-3.7-.2-7.9-.2-12.1-.2-4.23 0-11.05 1.62-16.84 7.9-5.79 6.31-22.06 21.56-22.06 52.57s22.59 60.96 25.77 65.2c3.16 4.23 44.54 68.02 107.84 95.42 15.08 6.52 26.84 10.42 36.01 13.34 15.14 4.82 28.92 4.14 39.8 2.51 12.13-1.82 37.31-15.21 42.55-29.89 5.24-14.68 5.24-27.26 3.67-29.89-1.58-2.63-5.74-4.23-12.05-7.38z" fill="white"/>
+    </svg>
+    PEÇA SUA MÚSICA
+  </a>
+</div>
+
+<audio id="audioPlayer" src="https://servidor34.brlogic.com:7100/live"></audio>
+
+<script>
+  const audio = document.getElementById('audioPlayer'),
+        btn = document.getElementById('playPauseBtn'),
+        icon = document.getElementById('playIcon'),
+        volume = document.getElementById('volumeRange'),
+        volumeIcon = document.getElementById('volumeIcon'),
+        volNormal = document.getElementById('volumeNormal'),
+        volMute = document.getElementById('volumeMute');
+
+  let lastVolume = volume.value;
+  audio.volume = volume.value;
+
+  const updateRange = () => {
+    let v = volume.value * 100;
+    volume.style.background = `linear-gradient(to right, #b9fb12 ${v}%, #f2f2f2 ${v}%)`;
+  };
+
+  btn.onclick = () => {
+    if (audio.paused) {
+      audio.load(); // força recarregar o stream ao dar play
+      audio.play();
+      icon.className = 'pause-icon';
+    } else {
+      audio.pause();
+      icon.className = 'play-icon';
+    }
+  };
+
+  volume.oninput = () => {
+    audio.volume = volume.value;
+    updateRange();
+    if (volume.value > 0) lastVolume = volume.value;
+    if (audio.volume > 0) {
+      volNormal.style.display = '';
+      volMute.style.display = 'none';
+    }
+  };
+
+  volumeIcon.onclick = () => {
+    if (audio.volume > 0) {
+      lastVolume = volume.value;
+      audio.volume = 0;
+      volume.value = 0;
+      volNormal.style.display = 'none';
+      volMute.style.display = '';
+    } else {
+      audio.volume = lastVolume;
+      volume.value = lastVolume;
+      volNormal.style.display = '';
+      volMute.style.display = 'none';
+    }
+    updateRange();
+  };
+
+  audio.onplay = () => icon.className = 'pause-icon';
+  audio.onpause = () => icon.className = 'play-icon';
+
+  window.onload = updateRange;
+</script>
+
+</body>
+</html>
