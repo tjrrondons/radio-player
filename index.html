@@ -142,40 +142,6 @@
     height: 16px;
     fill: white;
   }
-
-  /* --- RESPONSIVIDADE CELULAR/TABLET --- */
-  @media (max-width: 768px) {
-    .volume-control {
-      display: none !important;
-    }
-    .player {
-      height: 32px;
-      gap: 10px;
-      padding: 0 10px;
-    }
-    .play-button {
-      width: 24px;
-      height: 24px;
-    }
-    .play-icon {
-      border-left: 9px solid #f2f2f2;
-      border-top: 5px solid transparent;
-      border-bottom: 5px solid transparent;
-    }
-    .pause-icon {
-      width: 8px;
-      height: 10px;
-    }
-    .whatsapp-button {
-      font-size: 8px;
-      padding: 2px 6px;
-      gap: 4px;
-    }
-    .whatsapp-button svg {
-      width: 12px;
-      height: 12px;
-    }
-  }
 </style>
 </head>
 <body>
@@ -193,11 +159,13 @@
 
     <div class="volume-control">
       <svg class="volume-icon" id="volumeIcon" viewBox="0 0 24 24" fill="currentColor">
+        <!-- Ícone normal -->
         <g id="volumeNormal">
           <path d="M3.5 9.5v5c0 .28.22.5.5.5h3.29l3.85 3.85a.5.5 0 0 0 .86-.35V5.5a.5.5 0 0 0-.86-.35L7.29 9H4a.5.5 0 0 0-.5.5z"/>
           <path d="M17.5 12c0-2.07-.84-3.94-2.2-5.3a.5.5 0 0 0-.71.71 6 6 0 0 1 0 8.48.5.5 0 1 0 .71.71c1.36-1.36 2.2-3.23 2.2-5.3z"/>
           <path d="M20.5 12c0-2.76-1.12-5.26-2.93-7.07a.5.5 0 1 0-.71.71 9 9 0 0 1 0 12.72.5.5 0 1 0 .71.71c1.81-1.81 2.93-4.31 2.93-7.07z"/>
         </g>
+        <!-- Ícone mute -->
         <g id="volumeMute" style="display:none;">
           <path d="M3.5 9.5v5c0 .28.22.5.5.5h3.29l3.85 3.85a.5.5 0 0 0 .86-.35V5.5a.5.5 0 0 0-.86-.35L7.29 9H4a.5.5 0 0 0-.5.5z" fill="#ccc"/>
           <line x1="17" y1="8" x2="22" y2="16" stroke="red" stroke-width="2"/>
@@ -239,7 +207,7 @@
 
   btn.onclick = () => {
     if (audio.paused) {
-      audio.load();
+      audio.load(); // força recarregar o stream ao dar play
       audio.play();
       icon.className = 'pause-icon';
     } else {
